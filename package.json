@@ -1,0 +1,16 @@
+{
+  "name": "calc512bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "codeday-clear": "^1.1.4",
+    "moment": "^2.19.2",
+    "node-telegram-bot-api": "^0.29.0"
+  }
+}
