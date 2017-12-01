@@ -9,20 +9,21 @@ bot.start((ctx) => {
 
 var counter = 0;
 
-bot.command('help', (ctx) => ctx.reply('Reset to 0 /reset \nAdd 1 /add \nShow current value /get'))
+bot.command('help', (ctx) => ctx.reply('Reset to 0 /reset \nAdd X /add \nShow current value /get'))
 bot.command('get', (ctx) => ctx.reply('Value = ' + counter))
 bot.command('reset', (ctx) => { 
     counter = 0;
     ctx.reply('Value = ' + counter)
 })
 bot.command('add', (ctx) => { 
-    counter++;
+    argv = ctx.message.text.split(" ");
+    if (!isNaN((argv[1])))
+            counter += +argv[1];
     ctx.reply('Value = ' + counter)
 })
 
 
 bot.hears('hi', (ctx) => ctx.reply('Hey there!'))
-bot.hears(/buy/i, (ctx) => ctx.reply('Buy-buy!'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 
 bot.startPolling()
