@@ -9,13 +9,26 @@ var Clear = require('codeday-clear'),
 // moment is not a class, just a simple function
 var moment = require('moment');
 
+counter = 0;
+
 telegram.on("text", (message) => {
-  if(message.text.toLowerCase().indexOf("/codeday") === 0){
-    clear.getEventById("oo4QIuKQQTYA", (codedayEvent) => {
-      var endsAt = moment(codedayEvent.ends_at * 1000);
-      telegram.sendMessage(message.chat.id, "CodeDay ends " + endsAt.fromNow() + "!");
-    });
+  if(message.text.toLowerCase().indexOf("/get") === 0){
+      telegram.sendMessage(message.chat.id, counter);
   }
+  else if(message.text.toLowerCase().indexOf("/reset") === 0){
+      counter = 0;
+      telegram.sendMessage(message.chat.id, "Current value is reset to 0");
+  }
+  else if(message.text.toLowerCase().indexOf("/add") === 0){
+      counter++;
+      telegram.sendMessage(message.chat.id, counter);
+  }
+  else if(message.text.toLowerCase().indexOf("/help") === 0){
+      telegram.sendMessage(message.chat.id, "Reset to 0 /reset \nAdd 1 /add \nShow current value /get");
+  }      
+  else{
+      telegram.sendMessage(message.chat.id, "You did not enter any command. Use /help");
+  }    
 });
 
 
