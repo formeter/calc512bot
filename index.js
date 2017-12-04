@@ -1,25 +1,29 @@
-var TelegramBot = require('node-telegram-bot-api'),
-    // Be sure to replace YOUR_BOT_TOKEN with your actual bot token on this line.
-    telegram = new TelegramBot("490842395:AAF51fw-gy4b2eEh7DOMSkeH0fiyCUQM-qA", { polling: true });
+const BOT_TOKEN='490842395:AAF51fw-gy4b2eEh7DOMSkeH0fiyCUQM-qA';
+const Telegraf = require('telegraf')
 
-var Clear = require('codeday-clear'),
-    // Our sample app token and secret
-    clear = new Clear("1YZiGaj3baaLU8IKVsASRIWaNF2oJNg0", "1COMnWyGnGBsNqkhaZ6WMBWB9UWZw6QZ");
+const bot = new Telegraf(BOT_TOKEN)
+bot.start((ctx) => {
+  console.log('started:', ctx.from.id)
+  return ctx.reply('Welcome! Use /help')
+})
 
-// moment is not a class, just a simple function
-var moment = require('moment');
+var counter = 0;
 
-var a = 1;
+bot.command('help', (ctx) => ctx.reply('Reset to 0 /reset \nAdd X /add \nShow current value /get'))
+bot.command('get', (ctx) => ctx.reply('Value = ' + counter))
+bot.command('reset', (ctx) => { 
+    counter = 0;
+    ctx.reply('Value = ' + counter)
+})
+bot.command('add', (ctx) => { 
+    argv = ctx.message.text.split(" ");
+    if (!isNaN((argv[1])))
+            counter += +argv[1];
+    ctx.reply('Value = ' + counter)
+})
 
 
-telegram.on("text", (message) => {
-   if(message.text.toLowerCase().index0f("/get") === 0){
-        telegram.sendMessage(message.chat.id, "Hello world " + a);
-	a++;
-   }
-   else if(message.text.toLowerCase().indexOf("/reset") === 0) {
-	telegram.sendMessage(message.chat.id, "0");
-	a = 0;
-   }
-});
+bot.hears('hi', (ctx) => ctx.reply('Hey there!'))
+bot.on('sticker', (ctx) => ctx.reply('👍'))
 
+bot.startPolling()
